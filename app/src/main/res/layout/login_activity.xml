@@ -47,8 +47,8 @@
       android:id="@+id/email_layout"
       android:layout_width="300dp"
       android:layout_height="50dp"
-      android:layout_marginTop="95dp"
       app:layout_constraintTop_toBottomOf="@+id/sign_in_text"
+      android:layout_marginTop="95dp"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       android:hint="@string/enter_your_email"
@@ -73,24 +73,35 @@
         android:paddingStart="22dp" />
   </com.google.android.material.textfield.TextInputLayout>
 
-
-  <EditText
-      android:id="@+id/password"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:importantForAutofill="no"
-      android:minWidth="300dp"
-      android:minHeight="50dp"
-      android:hint="@string/password"
-      android:inputType="textPassword"
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/password_layout"
+      android:layout_width="300dp"
+      android:layout_height="50dp"
       app:layout_constraintTop_toBottomOf="@+id/email_layout"
       android:layout_marginTop="25dp"
-      android:textSize="14sp"
-      android:background="#e8e3e3"
-      android:padding="12dp"
-      android:textColor="#000000"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent" />
+      app:layout_constraintEnd_toEndOf="parent"
+      android:hint="@string/password"
+      app:endIconMode="custom"
+      app:endIconDrawable="@drawable/ic_password"
+      style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+      app:boxStrokeWidth="0dp"
+      app:boxBackgroundColor="#33C4C4C4"
+      app:boxCornerRadiusTopStart="12dp"
+      app:boxCornerRadiusTopEnd="12dp"
+      app:boxCornerRadiusBottomStart="12dp"
+      app:boxCornerRadiusBottomEnd="12dp">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inputType="textPassword"
+        android:fontFamily="@font/montserrat_light"
+        android:textSize="14sp"
+        android:textColor="#000000"
+        android:paddingStart="22dp" />
+  </com.google.android.material.textfield.TextInputLayout>
 
   <CheckBox
       android:id="@+id/remember_me"
@@ -98,8 +109,8 @@
       android:layout_height="wrap_content"
       android:text="@string/remember_me"
       android:textColor="#252525"
-      app:layout_constraintTop_toBottomOf="@+id/password"
-      app:layout_constraintStart_toStartOf="@+id/password"
+      app:layout_constraintTop_toBottomOf="@+id/password_layout"
+      app:layout_constraintStart_toStartOf="@+id/password_layout"
       android:layout_marginTop="4dp"
       android:textSize="12sp" />
 
@@ -109,8 +120,8 @@
       android:layout_height="wrap_content"
       android:text="@string/forget_password"
       android:textColor="#6C63FF"
-      app:layout_constraintTop_toBottomOf="@+id/password"
-      app:layout_constraintEnd_toEndOf="@+id/password"
+      app:layout_constraintTop_toBottomOf="@+id/password_layout"
+      app:layout_constraintEnd_toEndOf="@+id/password_layout"
       android:layout_marginTop="20dp"
       android:textSize="12sp" />
 
