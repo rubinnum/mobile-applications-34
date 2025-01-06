@@ -43,23 +43,35 @@
       android:textColor="#252525"
       android:gravity="center" />
 
-  <EditText
-      android:id="@+id/email"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:importantForAutofill="no"
-      android:minWidth="300dp"
-      android:minHeight="50dp"
-      android:hint="@string/enter_your_email"
-      app:layout_constraintTop_toBottomOf="@+id/sign_in_text"
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/email_layout"
+      android:layout_width="300dp"
+      android:layout_height="50dp"
       android:layout_marginTop="95dp"
-      android:inputType="textEmailAddress"
-      android:background="#e8e3e3"
-      android:textSize="14sp"
-      android:padding="12dp"
-      android:textColor="#000000"
+      app:layout_constraintTop_toBottomOf="@+id/sign_in_text"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent" />
+      app:layout_constraintEnd_toEndOf="parent"
+      android:hint="@string/enter_your_email"
+      app:endIconMode="custom"
+      app:endIconDrawable="@drawable/ic_mail"
+      style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+      app:boxStrokeWidth="0dp"
+      app:boxBackgroundColor="#33C4C4C4"
+      app:boxCornerRadiusTopStart="12dp"
+      app:boxCornerRadiusTopEnd="12dp"
+      app:boxCornerRadiusBottomStart="12dp"
+      app:boxCornerRadiusBottomEnd="12dp">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inputType="textEmailAddress"
+        android:textSize="14sp"
+        android:textColor="#000000"
+        android:paddingStart="22dp" />
+  </com.google.android.material.textfield.TextInputLayout>
+
 
   <EditText
       android:id="@+id/password"
@@ -70,7 +82,7 @@
       android:minHeight="50dp"
       android:hint="@string/password"
       android:inputType="textPassword"
-      app:layout_constraintTop_toBottomOf="@+id/email"
+      app:layout_constraintTop_toBottomOf="@+id/email_layout"
       android:layout_marginTop="25dp"
       android:textSize="14sp"
       android:background="#e8e3e3"
