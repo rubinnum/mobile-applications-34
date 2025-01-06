@@ -13,6 +13,7 @@ class RegistrationActivity : AppCompatActivity() {
         val login = findViewById<TextView>(R.id.login)
         login.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
         }
     }
