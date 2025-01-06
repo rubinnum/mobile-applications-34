@@ -5,16 +5,12 @@
     android:layout_height="match_parent">
 
   <ImageView
-      android:id="@+id/main_image"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      android:id="@+id/background_image"
+      style="@style/CustomBackgroundImage"
       android:contentDescription="@string/background_image"
-      android:src="@drawable/background_image"
-      android:scaleType="fitXY"
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      android:layout_marginTop="42dp" />
+      app:layout_constraintEnd_toEndOf="parent" />
 
   <TextView
       android:id="@+id/get_started"
@@ -39,77 +35,69 @@
       android:textSize="14sp"
       android:textColor="#252525" />
 
-  <EditText
-      android:id="@+id/full_name"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:importantForAutofill="no"
-      android:minWidth="300dp"
-      android:minHeight="50dp"
-      android:hint="@string/full_name"
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/full_name_layout"
       app:layout_constraintTop_toBottomOf="@+id/secondary_text"
       android:layout_marginTop="36dp"
-      android:inputType="text"
-      android:background="#e8e3e3"
-      android:textSize="14sp"
-      android:padding="12dp"
-      android:textColor="#000000"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent" />
+      app:layout_constraintEnd_toEndOf="parent"
+      style="@style/CustomTextInputLayout"
+      android:hint="@string/full_name"
+      app:endIconDrawable="@drawable/ic_full_name">
 
-  <EditText
-      android:id="@+id/valid_email"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:importantForAutofill="no"
-      android:minWidth="300dp"
-      android:minHeight="50dp"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/full_name_text"
+        style="@style/CustomTextInputEditText"
+        android:inputType="text" />
+  </com.google.android.material.textfield.TextInputLayout>
+
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/valid_email_layout"
+      app:layout_constraintTop_toBottomOf="@+id/full_name_layout"
+      android:layout_marginTop="19dp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      style="@style/CustomTextInputLayout"
       android:hint="@string/valid_email"
-      android:inputType="textEmailAddress"
-      app:layout_constraintTop_toBottomOf="@+id/full_name"
-      android:layout_marginTop="25dp"
-      android:textSize="14sp"
-      android:background="#e8e3e3"
-      android:padding="12dp"
-      android:textColor="#000000"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent" />
+      app:endIconDrawable="@drawable/ic_mail">
 
-  <EditText
-      android:id="@+id/phone_number"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:importantForAutofill="no"
-      android:minWidth="300dp"
-      android:minHeight="50dp"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/email"
+        style="@style/CustomTextInputEditText"
+        android:inputType="textEmailAddress" />
+  </com.google.android.material.textfield.TextInputLayout>
+
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/phone_number_layout"
+      app:layout_constraintTop_toBottomOf="@+id/valid_email_layout"
+      android:layout_marginTop="19dp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      style="@style/CustomTextInputLayout"
       android:hint="@string/phone_number"
-      android:inputType="phone"
-      app:layout_constraintTop_toBottomOf="@+id/valid_email"
-      android:layout_marginTop="25dp"
-      android:textSize="14sp"
-      android:background="#e8e3e3"
-      android:padding="12dp"
-      android:textColor="#000000"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent" />
+      app:endIconDrawable="@drawable/ic_phone">
 
-  <EditText
-      android:id="@+id/strong_password"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:importantForAutofill="no"
-      android:minWidth="300dp"
-      android:minHeight="50dp"
-      android:hint="@string/strong_password"
-      android:inputType="textPassword"
-      app:layout_constraintTop_toBottomOf="@+id/phone_number"
-      android:layout_marginTop="25dp"
-      android:textSize="14sp"
-      android:background="#e8e3e3"
-      android:padding="12dp"
-      android:textColor="#000000"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/phone_number"
+        style="@style/CustomTextInputEditText"
+        android:inputType="phone" />
+  </com.google.android.material.textfield.TextInputLayout>
+
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/strong_password_layout"
+      app:layout_constraintTop_toBottomOf="@+id/phone_number_layout"
+      android:layout_marginTop="19dp"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent" />
+      app:layout_constraintEnd_toEndOf="parent"
+      style="@style/CustomTextInputLayout"
+      android:hint="@string/strong_password"
+      app:endIconDrawable="@drawable/ic_password">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/strong_password"
+        style="@style/CustomTextInputEditText"
+        android:inputType="textPassword" />
+  </com.google.android.material.textfield.TextInputLayout>
 
   <CheckBox
       android:id="@+id/terms_and_conditions"
@@ -117,23 +105,15 @@
       android:layout_height="wrap_content"
       android:text="@string/terms_and_conditions"
       android:textColor="#252525"
-      app:layout_constraintTop_toBottomOf="@+id/strong_password"
-      app:layout_constraintStart_toStartOf="@+id/strong_password"
+      app:layout_constraintTop_toBottomOf="@+id/strong_password_layout"
+      app:layout_constraintStart_toStartOf="@+id/strong_password_layout"
       android:layout_marginTop="5dp"
       android:textSize="9sp" />
 
-  <Button
+  <com.google.android.material.button.MaterialButton
       android:id="@+id/next_button"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:minWidth="350dp"
-      android:text="@string/next"
-      android:backgroundTint="#6C63FF"
-      android:textColor="#FFFFFF"
-      android:padding="12dp"
-      android:textSize="20sp"
+      style="@style/CustomNextButton"
       app:layout_constraintBottom_toBottomOf="@id/login_layout"
-      android:layout_marginBottom="23dp"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent" />
 
