@@ -125,17 +125,20 @@
       android:layout_marginTop="20dp"
       android:textSize="12sp" />
 
-  <Button
+  <com.google.android.material.button.MaterialButton
       android:id="@+id/next_button"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:minWidth="350dp"
+      android:layout_width="300dp"
+      android:layout_height="50dp"
       android:text="@string/next"
       android:backgroundTint="#6C63FF"
       android:textColor="#FFFFFF"
+      app:cornerRadius="12dp"
       android:padding="12dp"
+      android:fontFamily="@font/montserrat_semibold"
       android:textSize="20sp"
       app:layout_constraintBottom_toBottomOf="@id/register_layout"
+      android:insetTop="0dp"
+      android:insetBottom="0dp"
       android:layout_marginBottom="23dp"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent" />
