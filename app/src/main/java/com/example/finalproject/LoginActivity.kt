@@ -38,15 +38,8 @@ class LoginActivity : AppCompatActivity() {
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
 
-            if (!credentialsManager.isEmailValid(email)) {
-                // Message is not actually displayed to not mess up the margins (error icon only)
-                emailLayout.error = getString(R.string.invalid_email_message)
-            }
-
-            if (!credentialsManager.isPasswordValid(password)) {
-                // Message is not actually displayed to not mess up the margins (error icon only)
-                passwordLayout.error = getString(R.string.invalid_password_message)
-            }
+            emailLayout.error = if (!credentialsManager.isEmailValid(email)) getString(R.string.invalid_email_message) else null
+            passwordLayout.error = if (!credentialsManager.isPasswordValid(password)) getString(R.string.invalid_password_message) else null
 
             if (email == "test@te.st" && password == "12345678") {
                 displayNewActivity(MainActivity::class.java)
