@@ -24,9 +24,7 @@ class LoginActivity : AppCompatActivity() {
 
         val registerNow = findViewById<TextView>(R.id.register_now)
         registerNow.setOnClickListener {
-            val intent = Intent(this, RegistrationActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            startActivity(intent)
+            displayNewActivity(RegistrationActivity::class.java)
         }
 
         val credentialsManager = CredentialsManager()
@@ -49,6 +47,16 @@ class LoginActivity : AppCompatActivity() {
                 // Message is not actually displayed to not mess up the margins (error icon only)
                 passwordLayout.error = getString(R.string.invalid_password_message)
             }
+
+            if (email == "test@te.st" && password == "12345678") {
+                displayNewActivity(MainActivity::class.java)
+            }
         }
+    }
+
+    private fun displayNewActivity(cls: Class<*>) {
+        val intent = Intent(this, cls)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
     }
 }
