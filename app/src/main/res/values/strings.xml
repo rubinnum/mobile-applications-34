@@ -19,4 +19,6 @@
     <string name="terms_and_conditions">By checking the box you agree to our terms and conditions</string>
     <string name="already_a_member">Already a member?</string>
     <string name="log_in">Log In</string>
+    <string name="invalid_email_message">Invalid email</string>
+    <string name="invalid_password_message">Password is too short</string>
 </resources>

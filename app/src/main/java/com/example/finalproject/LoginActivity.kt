@@ -2,11 +2,14 @@ package com.example.finalproject
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +27,26 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, RegistrationActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
+        }
+
+        val credentialsManager = CredentialsManager()
+        val emailLayout = findViewById<TextInputLayout>(R.id.email_layout)
+        val emailEditText = findViewById<TextInputEditText>(R.id.email)
+        val passwordLayout = findViewById<TextInputLayout>(R.id.password_layout)
+        val passwordEditText = findViewById<TextInputEditText>(R.id.password)
+        val nextButton = findViewById<Button>(R.id.next_button)
+
+        nextButton.setOnClickListener {
+            val email = emailEditText.text.toString()
+            val password = passwordEditText.text.toString()
+
+            if (!credentialsManager.isEmailValid(email)) {
+                emailLayout.error = getString(R.string.invalid_email_message)
+            }
+
+            if (!credentialsManager.isPasswordValid(password)) {
+                passwordLayout.error = getString(R.string.invalid_password_message)
+            }
         }
     }
 }
