@@ -10,7 +10,7 @@
 
   <style name="CustomTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
     <item name="android:layout_width">300dp</item>
-    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_height">50dp</item>
     <item name="boxBackgroundColor">#33C4C4C4</item>
     <item name="endIconMode">custom</item>
     <item name="boxStrokeWidth">0dp</item>
@@ -23,7 +23,7 @@
 
   <style name="CustomTextInputEditText">
     <item name="android:layout_width">match_parent</item>
-    <item name="android:layout_height">50dp</item>
+    <item name="android:layout_height">match_parent</item>
     <item name="fontFamily">@font/montserrat_light</item>
     <item name="android:textSize">14sp</item>
     <item name="android:textColor">#000000</item>

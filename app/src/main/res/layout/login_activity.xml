@@ -58,7 +58,7 @@
   <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/password_layout"
       app:layout_constraintTop_toBottomOf="@+id/email_layout"
-      android:layout_marginTop="10dp"
+      android:layout_marginTop="25dp"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       style="@style/CustomTextInputLayout"
@@ -79,6 +79,7 @@
       android:textColor="#252525"
       app:layout_constraintTop_toBottomOf="@+id/password_layout"
       app:layout_constraintStart_toStartOf="@+id/password_layout"
+      android:layout_marginTop="4dp"
       android:textSize="12sp" />
 
   <TextView
@@ -89,7 +90,7 @@
       android:textColor="#6C63FF"
       app:layout_constraintTop_toBottomOf="@+id/password_layout"
       app:layout_constraintEnd_toEndOf="@+id/password_layout"
-      android:layout_marginTop="16dp"
+      android:layout_marginTop="20dp"
       android:textSize="12sp" />
 
   <com.google.android.material.button.MaterialButton

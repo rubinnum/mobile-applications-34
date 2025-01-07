@@ -41,10 +41,12 @@ class LoginActivity : AppCompatActivity() {
             val password = passwordEditText.text.toString()
 
             if (!credentialsManager.isEmailValid(email)) {
+                // Message is not actually displayed to not mess up the margins (error icon only)
                 emailLayout.error = getString(R.string.invalid_email_message)
             }
 
             if (!credentialsManager.isPasswordValid(password)) {
+                // Message is not actually displayed to not mess up the margins (error icon only)
                 passwordLayout.error = getString(R.string.invalid_password_message)
             }
         }
