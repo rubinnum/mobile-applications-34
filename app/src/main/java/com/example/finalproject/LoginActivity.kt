@@ -41,7 +41,7 @@ class LoginActivity : AppCompatActivity() {
             emailLayout.error = if (!credentialsManager.isEmailValid(email)) getString(R.string.invalid_email_message) else null
             passwordLayout.error = if (!credentialsManager.isPasswordValid(password)) getString(R.string.invalid_password_message) else null
 
-            if (email == "test@te.st" && password == "12345678") {
+            if (credentialsManager.userExists(email, password)) {
                 displayNewActivity(MainActivity::class.java)
             }
         }
