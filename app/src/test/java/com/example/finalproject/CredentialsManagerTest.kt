@@ -38,4 +38,17 @@ class CredentialsManagerTest {
     fun shouldReturnTrueForValidPassword() {
         assertTrue(credentialsManager.isPasswordValid("password123"))
     }
+
+    @Test
+    fun shouldReturnTrueForHardcodedCredentials() {
+        // given
+        val email = "test@te.st"
+        val password = "12345678"
+
+        // when
+        val result = credentialsManager.userExists(email, password)
+
+        // then
+        assertTrue(result)
+    }
 }
