@@ -4,6 +4,7 @@ package com.example.finalproject
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class CredentialsManagerTest {
 
@@ -50,5 +51,49 @@ class CredentialsManagerTest {
 
         // then
         assertTrue(result)
+    }
+
+    @Test
+    fun shouldRegisterUser() {
+        // given
+        val email = "valid.email@gmail.com"
+        val password = "password123"
+
+        // when
+        credentialsManager.registerUser(email, password)
+
+        // then
+        assertTrue(credentialsManager.registeredUsers.containsKey(email))
+    }
+
+    @Test
+    fun shouldThrowExceptionForInvalidCredentials() {
+        // given
+        val email = "invalid-email"
+        val password = "1234567"
+
+        // when
+        val exception = assertThrows<IllegalArgumentException> {
+            credentialsManager.registerUser(email, password)
+        }
+
+        // then
+        assertTrue(exception.message == "Invalid credentials")
+    }
+
+    @Test
+    fun shouldThrowExceptionForExistingUser() {
+        // given
+        val email = "new.user@gmail.com"
+        val password = "password123"
+        credentialsManager.registeredUsers[email] = password
+
+        // when
+        val exception = assertThrows<IllegalArgumentException> {
+            credentialsManager.registerUser(email, password)
+        }
+
+        // then
+        assertTrue(exception.message == "User already exists")
     }
 }
