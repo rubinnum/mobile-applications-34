@@ -11,8 +11,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 class LoginActivity : AppCompatActivity() {
-    private val credentialsManager = CredentialsManager()
-
     private val registerNow: TextView
         get() = findViewById(R.id.register_now)
 
@@ -50,11 +48,11 @@ class LoginActivity : AppCompatActivity() {
             val password = passwordEditText.text.toString()
 
             emailLayout.error =
-                if (!credentialsManager.isEmailValid(email)) getString(R.string.invalid_email_message) else null
+                if (!CredentialsManager.isEmailValid(email)) getString(R.string.invalid_email_message) else null
             passwordLayout.error =
-                if (!credentialsManager.isPasswordValid(password)) getString(R.string.invalid_password_message) else null
+                if (!CredentialsManager.isPasswordValid(password)) getString(R.string.invalid_password_message) else null
 
-            if (credentialsManager.userExists(email, password)) {
+            if (CredentialsManager.userExists(email, password)) {
                 Utils.displayNewActivity(this, MainActivity::class.java)
             }
         }

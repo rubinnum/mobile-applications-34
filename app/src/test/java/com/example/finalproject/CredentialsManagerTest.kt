@@ -7,37 +7,34 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class CredentialsManagerTest {
-
-    private val credentialsManager = CredentialsManager()
-
     @Test
     fun shouldReturnFalseForEmptyEmail() {
-        assertFalse(credentialsManager.isEmailValid(""))
+        assertFalse(CredentialsManager.isEmailValid(""))
     }
 
     @Test
     fun shouldReturnFalseForWrongFormatEmail() {
-        assertFalse(credentialsManager.isEmailValid("invalid-email"))
+        assertFalse(CredentialsManager.isEmailValid("invalid-email"))
     }
 
     @Test
     fun shouldReturnTrueForValidEmail() {
-        assertTrue(credentialsManager.isEmailValid("example@email.com"))
+        assertTrue(CredentialsManager.isEmailValid("example@email.com"))
     }
 
     @Test
     fun shouldReturnFalseForEmptyPassword() {
-        assertFalse(credentialsManager.isPasswordValid(""))
+        assertFalse(CredentialsManager.isPasswordValid(""))
     }
 
     @Test
     fun shouldReturnFalseForPasswordWithLessThanEightChars() {
-        assertFalse(credentialsManager.isPasswordValid("1234567"))
+        assertFalse(CredentialsManager.isPasswordValid("1234567"))
     }
 
     @Test
     fun shouldReturnTrueForValidPassword() {
-        assertTrue(credentialsManager.isPasswordValid("password123"))
+        assertTrue(CredentialsManager.isPasswordValid("password123"))
     }
 
     @Test
@@ -47,7 +44,7 @@ class CredentialsManagerTest {
         val password = "12345678"
 
         // when
-        val result = credentialsManager.userExists(email, password)
+        val result = CredentialsManager.userExists(email, password)
 
         // then
         assertTrue(result)
@@ -60,10 +57,10 @@ class CredentialsManagerTest {
         val password = "12345678"
 
         // when
-        credentialsManager.registerUser(email, password)
+        CredentialsManager.registerUser(email, password)
 
         // then
-        assertTrue(credentialsManager.registeredUsers.containsKey(email))
+        assertTrue(CredentialsManager.registeredUsers.containsKey(email))
     }
 
     @Test
@@ -74,7 +71,7 @@ class CredentialsManagerTest {
 
         // when
         val exception = assertThrows<IllegalArgumentException> {
-            credentialsManager.registerUser(email, password)
+            CredentialsManager.registerUser(email, password)
         }
 
         // then
@@ -86,11 +83,11 @@ class CredentialsManagerTest {
         // given
         val email = "new.user@gmail.com"
         val password = "12345678"
-        credentialsManager.registeredUsers[email] = password
+        CredentialsManager.registeredUsers[email] = password
 
         // when
         val exception = assertThrows<IllegalArgumentException> {
-            credentialsManager.registerUser(email, password)
+            CredentialsManager.registerUser(email, password)
         }
 
         // then
@@ -102,11 +99,11 @@ class CredentialsManagerTest {
         // given
         val email = "test@te.st"
         val password = "12345678"
-        credentialsManager.registeredUsers[email] = password
+        CredentialsManager.registeredUsers[email] = password
 
         // when
         val exception = assertThrows<IllegalArgumentException> {
-            credentialsManager.registerUser("TEST@te.st", password)
+            CredentialsManager.registerUser("TEST@te.st", password)
         }
 
         // then

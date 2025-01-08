@@ -2,7 +2,7 @@ package com.example.finalproject
 
 import androidx.core.util.PatternsCompat
 
-class CredentialsManager {
+object CredentialsManager {
     var registeredUsers: MutableMap<String, String> = mutableMapOf()
 
     fun isEmailValid(email: String): Boolean =

@@ -8,8 +8,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 class RegistrationActivity : AppCompatActivity() {
-    private val credentialsManager = CredentialsManager()
-
     private val login: TextView
         get() = findViewById(R.id.login)
 
@@ -38,7 +36,7 @@ class RegistrationActivity : AppCompatActivity() {
                 val email = validEmailEditText.text.toString()
                 val password = strongPasswordEditText.text.toString()
 
-                credentialsManager.registerUser(email, password)
+                CredentialsManager.registerUser(email, password)
                 Utils.displayNewActivity(this, LoginActivity::class.java)
             } catch (_: IllegalArgumentException) {
                 validEmailLayout.error = getString(R.string.invalid_email_message)
