@@ -57,7 +57,7 @@ class CredentialsManagerTest {
     fun shouldRegisterUser() {
         // given
         val email = "valid.email@gmail.com"
-        val password = "password123"
+        val password = "12345678"
 
         // when
         credentialsManager.registerUser(email, password)
@@ -85,12 +85,28 @@ class CredentialsManagerTest {
     fun shouldThrowExceptionForExistingUser() {
         // given
         val email = "new.user@gmail.com"
-        val password = "password123"
+        val password = "12345678"
         credentialsManager.registeredUsers[email] = password
 
         // when
         val exception = assertThrows<IllegalArgumentException> {
             credentialsManager.registerUser(email, password)
+        }
+
+        // then
+        assertTrue(exception.message == "User already exists")
+    }
+
+    @Test
+    fun shouldThrowExceptionForExistingUserCaseInsensitive() {
+        // given
+        val email = "test@te.st"
+        val password = "12345678"
+        credentialsManager.registeredUsers[email] = password
+
+        // when
+        val exception = assertThrows<IllegalArgumentException> {
+            credentialsManager.registerUser("TEST@te.st", password)
         }
 
         // then

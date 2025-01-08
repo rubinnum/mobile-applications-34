@@ -17,10 +17,14 @@ class CredentialsManager {
         if (!areCredentialsValid(email, password))
             throw IllegalArgumentException("Invalid credentials")
 
-        if (registeredUsers.containsKey(email))
+        if (registeredUsers.containsKey(email.lowercase()))
             throw IllegalArgumentException("User already exists")
 
-        registeredUsers[email] = password
+        insertCaseInsensitiveEntity(email, password)
+    }
+
+    private fun insertCaseInsensitiveEntity(email: String, password: String) {
+        registeredUsers[email.lowercase()] = password
     }
 
     private fun areCredentialsValid(email: String, password: String): Boolean =
