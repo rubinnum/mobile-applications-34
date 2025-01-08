@@ -1,6 +1,5 @@
 package com.example.finalproject
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -43,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         registerNow.setOnClickListener {
-            displayNewActivity(RegistrationActivity::class.java)
+            Utils.displayNewActivity(this, RegistrationActivity::class.java)
         }
 
         nextButton.setOnClickListener {
@@ -56,14 +55,8 @@ class LoginActivity : AppCompatActivity() {
                 if (!credentialsManager.isPasswordValid(password)) getString(R.string.invalid_password_message) else null
 
             if (credentialsManager.userExists(email, password)) {
-                displayNewActivity(MainActivity::class.java)
+                Utils.displayNewActivity(this, MainActivity::class.java)
             }
         }
-    }
-
-    private fun displayNewActivity(cls: Class<*>) {
-        val intent = Intent(this, cls)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-        startActivity(intent)
     }
 }
