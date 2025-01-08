@@ -43,6 +43,12 @@ class LoginActivity : AppCompatActivity() {
             Utils.displayNewActivity(this, RegistrationActivity::class.java)
         }
 
+        val extraEmail = intent.getStringExtra("email")
+        val extraPassword = intent!!.getStringExtra("password")
+
+        emailEditText.setText(extraEmail)
+        passwordEditText.setText(extraPassword)
+
         nextButton.setOnClickListener {
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
