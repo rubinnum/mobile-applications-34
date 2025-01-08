@@ -64,7 +64,7 @@
       app:endIconDrawable="@drawable/ic_mail">
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/email"
+        android:id="@+id/valid_email"
         style="@style/CustomTextInputEditText"
         android:inputType="textEmailAddress" />
   </com.google.android.material.textfield.TextInputLayout>

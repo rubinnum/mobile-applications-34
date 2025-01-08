@@ -1,6 +1,5 @@
 package com.example.finalproject
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -12,8 +11,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 class LoginActivity : AppCompatActivity() {
-    private val credentialsManager = CredentialsManager()
-
     private val registerNow: TextView
         get() = findViewById(R.id.register_now)
 
@@ -43,27 +40,27 @@ class LoginActivity : AppCompatActivity() {
         }
 
         registerNow.setOnClickListener {
-            displayNewActivity(RegistrationActivity::class.java)
+            Utils.displayNewActivity(this, RegistrationActivity::class.java)
         }
+
+        val extraEmail = intent.getStringExtra("email")
+        val extraPassword = intent!!.getStringExtra("password")
+
+        emailEditText.setText(extraEmail)
+        passwordEditText.setText(extraPassword)
 
         nextButton.setOnClickListener {
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
 
             emailLayout.error =
-                if (!credentialsManager.isEmailValid(email)) getString(R.string.invalid_email_message) else null
+                if (!CredentialsManager.isEmailValid(email)) getString(R.string.invalid_email_message) else null
             passwordLayout.error =
-                if (!credentialsManager.isPasswordValid(password)) getString(R.string.invalid_password_message) else null
+                if (!CredentialsManager.isPasswordValid(password)) getString(R.string.invalid_password_message) else null
 
-            if (credentialsManager.userExists(email, password)) {
-                displayNewActivity(MainActivity::class.java)
+            if (CredentialsManager.userExists(email, password)) {
+                Utils.displayNewActivity(this, MainActivity::class.java)
             }
         }
-    }
-
-    private fun displayNewActivity(cls: Class<*>) {
-        val intent = Intent(this, cls)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-        startActivity(intent)
     }
 }
