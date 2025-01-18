@@ -9,7 +9,7 @@ import com.example.finalproject.Utils.Companion.replaceFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-class RegistrationFragment : Fragment() {
+class RegistrationFragment : Fragment(R.layout.registration_fragment) {
     private lateinit var login: TextView
     private lateinit var nextButton: Button
     private lateinit var validEmailLayout: TextInputLayout
@@ -26,11 +26,7 @@ class RegistrationFragment : Fragment() {
         strongPasswordEditText = view.findViewById(R.id.strong_password)
 
         login.setOnClickListener {
-            requireActivity().supportFragmentManager.replaceFragment(
-                R.id.fragment_container,
-                LoginFragment()
-            )
-            Utils.displayNewActivity(requireContext(), LoginFragment::class.java)
+            parentFragmentManager.popBackStack()
         }
 
         nextButton.setOnClickListener {
@@ -39,7 +35,7 @@ class RegistrationFragment : Fragment() {
                 val password = strongPasswordEditText.text.toString()
 
                 CredentialsManager.registerUser(email, password)
-                requireActivity().supportFragmentManager.replaceFragment(
+                parentFragmentManager.replaceFragment(
                     R.id.fragment_container,
                     LoginFragment.newInstance(email, password)
                 )

@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.finalproject.Utils.Companion.replaceFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -27,7 +28,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
         nextButton = view.findViewById(R.id.next_button)
 
         registerNow.setOnClickListener {
-            Utils.displayNewActivity(requireContext(), RegistrationFragment::class.java)
+            parentFragmentManager.replaceFragment(R.id.fragment_container, RegistrationFragment(), true)
         }
 
         val extraEmail = arguments?.getString("email")
@@ -46,7 +47,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
                 if (!CredentialsManager.isPasswordValid(password)) getString(R.string.invalid_password_message) else null
 
             if (CredentialsManager.userExists(email, password)) {
-                Utils.displayNewActivity(requireContext(), MainActivity::class.java)
+                Utils.displayNewActivity(requireContext(), SampleActivity::class.java)
             }
         }
     }
