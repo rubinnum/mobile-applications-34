@@ -29,7 +29,7 @@ class RegistrationActivity : AppCompatActivity() {
         setContentView(R.layout.registration_activity)
 
         login.setOnClickListener {
-            Utils.displayNewActivity(this, LoginActivity::class.java)
+            Utils.displayNewActivity(this, LoginFragment::class.java)
         }
 
         nextButton.setOnClickListener {
@@ -38,7 +38,7 @@ class RegistrationActivity : AppCompatActivity() {
                 val password = strongPasswordEditText.text.toString()
 
                 CredentialsManager.registerUser(email, password)
-                val intent = Intent(this, LoginActivity::class.java).apply {
+                val intent = Intent(this, LoginFragment::class.java).apply {
                     putExtra("email", email)
                     putExtra("password", password)
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
