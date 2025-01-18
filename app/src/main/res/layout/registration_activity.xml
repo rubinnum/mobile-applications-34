@@ -114,7 +114,8 @@
 
   <com.google.android.material.button.MaterialButton
       android:id="@+id/next_button"
-      style="@style/CustomNextButton"
+      style="@style/CustomButton"
+      android:text="@string/next"
       app:layout_constraintBottom_toBottomOf="@id/login_layout"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent" />

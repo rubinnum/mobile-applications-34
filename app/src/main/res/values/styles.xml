@@ -30,10 +30,9 @@
     <item name="android:paddingStart">22dp</item>
   </style>
 
-  <style name="CustomNextButton">
+  <style name="CustomButton">
     <item name="android:layout_width">300dp</item>
     <item name="android:layout_height">50dp</item>
-    <item name="android:text">@string/next</item>
     <item name="backgroundTint">#6C63FF</item>
     <item name="android:textColor">#FFFFFF</item>
     <item name="cornerRadius">12dp</item>
