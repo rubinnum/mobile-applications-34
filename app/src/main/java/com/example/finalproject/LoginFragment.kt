@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -29,7 +27,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
         nextButton = view.findViewById(R.id.next_button)
 
         registerNow.setOnClickListener {
-            Utils.displayNewActivity(requireContext(), RegistrationActivity::class.java)
+            Utils.displayNewActivity(requireContext(), RegistrationFragment::class.java)
         }
 
         val extraEmail = arguments?.getString("email")
