@@ -3,6 +3,7 @@ package com.example.finalproject
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.finalproject.Utils.Companion.replaceFragment
 
 class SampleActivity : AppCompatActivity() {
     private val changeFragmentButton: TextView
@@ -15,24 +16,13 @@ class SampleActivity : AppCompatActivity() {
         val fragmentA = FragmentA()
         val fragmentB = FragmentB()
 
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.fragment_container, fragmentA)
-            commit()
-        }
+        supportFragmentManager.replaceFragment(R.id.fragment_container, fragmentA)
 
         changeFragmentButton.setOnClickListener {
-            if (fragmentA.isVisible) {
-                supportFragmentManager.beginTransaction().apply {
-                    replace(R.id.fragment_container, fragmentB)
-                    commit()
-                    addToBackStack(null);
-                }
-            } else {
-                supportFragmentManager.beginTransaction().apply {
-                    replace(R.id.fragment_container, fragmentA)
-                    commit()
-                }
-            }
+            if (fragmentA.isVisible)
+                supportFragmentManager.replaceFragment(R.id.fragment_container, fragmentB, true)
+            else
+                supportFragmentManager.replaceFragment(R.id.fragment_container, fragmentA)
         }
     }
 }
