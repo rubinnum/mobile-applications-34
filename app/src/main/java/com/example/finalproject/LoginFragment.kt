@@ -20,7 +20,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with (view) {
+        with(view) {
             registerNow = findViewById(R.id.register_now)
             emailLayout = findViewById(R.id.email_layout)
             emailEditText = findViewById(R.id.email)
@@ -30,7 +30,11 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
         }
 
         registerNow.setOnClickListener {
-            parentFragmentManager.replaceFragment(R.id.fragment_container, RegistrationFragment(), true)
+            parentFragmentManager.replaceFragment(
+                R.id.fragment_container,
+                RegistrationFragment(),
+                true
+            )
         }
 
         val extraEmail = arguments?.getString("email")
@@ -49,7 +53,11 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
                 if (!CredentialsManager.isPasswordValid(password)) getString(R.string.invalid_password_message) else null
 
             if (CredentialsManager.userExists(email, password)) {
-                Utils.displayNewActivity(requireContext(), SampleActivity::class.java)
+                parentFragmentManager.replaceFragment(
+                    R.id.fragment_container,
+                    RecipesFragment(),
+                    true
+                )
             }
         }
     }
