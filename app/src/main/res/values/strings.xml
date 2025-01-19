@@ -28,5 +28,6 @@
   <string name="share_icon">Share icon</string>
   <string name="like_icon">Like icon</string>
   <string name="title_for_a_recipe">Title for a recipe</string>
-  <string name="description_for_a_recipe">This is a description for a recipe that is long enough to take two lines...</string>
+  <string name="description_for_a_recipe">This is a description for a recipe that is long enough to take two lines…</string>
+  <string name="japanese_food">Japanese Food</string>
 </resources>
