@@ -19,11 +19,13 @@ class RegistrationFragment : Fragment(R.layout.registration_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        login = view.findViewById(R.id.login)
-        nextButton = view.findViewById(R.id.next_button)
-        validEmailLayout = view.findViewById(R.id.valid_email_layout)
-        validEmailEditText = view.findViewById(R.id.valid_email)
-        strongPasswordEditText = view.findViewById(R.id.strong_password)
+        with(view) {
+            login = findViewById(R.id.login)
+            nextButton = findViewById(R.id.next_button)
+            validEmailLayout = findViewById(R.id.valid_email_layout)
+            validEmailEditText = findViewById(R.id.valid_email)
+            strongPasswordEditText = findViewById(R.id.strong_password)
+        }
 
         login.setOnClickListener {
             parentFragmentManager.popBackStack()

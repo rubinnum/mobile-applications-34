@@ -20,12 +20,14 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        registerNow = view.findViewById(R.id.register_now)
-        emailLayout = view.findViewById(R.id.email_layout)
-        emailEditText = view.findViewById(R.id.email)
-        passwordLayout = view.findViewById(R.id.password_layout)
-        passwordEditText = view.findViewById(R.id.password)
-        nextButton = view.findViewById(R.id.next_button)
+        with (view) {
+            registerNow = findViewById(R.id.register_now)
+            emailLayout = findViewById(R.id.email_layout)
+            emailEditText = findViewById(R.id.email)
+            passwordLayout = findViewById(R.id.password_layout)
+            passwordEditText = findViewById(R.id.password)
+            nextButton = findViewById(R.id.next_button)
+        }
 
         registerNow.setOnClickListener {
             parentFragmentManager.replaceFragment(R.id.fragment_container, RegistrationFragment(), true)
