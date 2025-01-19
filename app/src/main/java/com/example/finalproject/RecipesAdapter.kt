@@ -7,8 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class RecipeAdapter(private val recipes: List<RecipeItem>) :
-    RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
+class RecipesAdapter(private val recipes: List<RecipeItem>) :
+    RecyclerView.Adapter<RecipesAdapter.RecipeViewHolder>() {
     inner class RecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val recipeImage: ImageView = itemView.findViewById(R.id.recipe_image)
         private val recipeTitle: TextView = itemView.findViewById(R.id.recipe_title)
