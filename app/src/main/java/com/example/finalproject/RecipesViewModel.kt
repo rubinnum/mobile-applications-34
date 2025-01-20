@@ -2,12 +2,15 @@ package com.example.finalproject
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.finalproject.RecipeAction.LIKE
 import com.example.finalproject.RecipeAction.SHARE
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
-class RecipesViewModel(private val recipeRepository: RecipeRepository) : ViewModel() {
+class RecipesViewModel : ViewModel() {
+    private val recipesRepository = RecipeRepository()
     private val _recipesState = MutableStateFlow<List<RecipeItem>>(emptyList())
     val recipesState: StateFlow<List<RecipeItem>> = _recipesState
 
@@ -16,7 +19,9 @@ class RecipesViewModel(private val recipeRepository: RecipeRepository) : ViewMod
     }
 
     private fun loadRecipes() {
-        _recipesState.value = recipeRepository.getRecipes()
+        viewModelScope.launch {
+            _recipesState.value = recipesRepository.getRecipes()
+        }
     }
 
     fun onRecipeClicked(recipeId: Int) {

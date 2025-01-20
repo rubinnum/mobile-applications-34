@@ -5,14 +5,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.finalproject.RecipeAction.LIKE
+import com.example.finalproject.RecipeAction.SHARE
 
 class RecipesAdapter(
-    private val recipes: List<RecipeItem>,
     private val onItemClick: (position: Int) -> Unit,
-    private val onActionClick: (position: Int, action: String) -> Unit
-) :
-    RecyclerView.Adapter<RecipesAdapter.RecipeViewHolder>() {
+    private val onActionClick: (position: Int, action: RecipeAction) -> Unit
+) : ListAdapter<RecipeItem, RecipesAdapter.RecipeViewHolder>(RecipeDiffCallback()) {
     inner class RecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val recipeImage: ImageView = itemView.findViewById(R.id.recipe_image)
         private val recipeTitle: TextView = itemView.findViewById(R.id.recipe_title)
@@ -26,24 +28,15 @@ class RecipesAdapter(
             recipeDescription.text = recipe.description
 
             itemView.setOnClickListener {
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    onItemClick(recipes[position].recipeId)
-                }
+                onItemClick(recipe.recipeId)
             }
 
             shareIcon.setOnClickListener {
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    onActionClick(recipes[position].recipeId, "share")
-                }
+                onActionClick(recipe.recipeId, SHARE)
             }
 
             likeIcon.setOnClickListener {
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    onActionClick(recipes[position].recipeId, "like")
-                }
+                onActionClick(recipe.recipeId, LIKE)
             }
         }
     }
@@ -53,11 +46,17 @@ class RecipesAdapter(
         return RecipeViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return recipes.size
+    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
+        holder.bind(getItem(position))
+    }
+}
+
+private class RecipeDiffCallback : DiffUtil.ItemCallback<RecipeItem>() {
+    override fun areItemsTheSame(oldItem: RecipeItem, newItem: RecipeItem): Boolean {
+        return oldItem.recipeId == newItem.recipeId
     }
 
-    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
-        holder.bind(recipes[position])
+    override fun areContentsTheSame(oldItem: RecipeItem, newItem: RecipeItem): Boolean {
+        return oldItem == newItem
     }
 }

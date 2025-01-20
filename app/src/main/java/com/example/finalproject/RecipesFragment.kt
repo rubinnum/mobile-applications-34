@@ -1,27 +1,37 @@
 package com.example.finalproject
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.launch
 
 class RecipesFragment : Fragment(R.layout.recipes_fragment) {
+    private val viewModel by viewModels<RecipesViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recipesRepository = RecipeRepository()
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recipes_recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = RecipesAdapter(
-            recipes = recipesRepository.getRecipes(),
-            onItemClick = { position ->
-                Log.d("RecipesFragment", "Recipe with id $position was clicked")
+        val recipesAdapter = RecipesAdapter(
+            onItemClick = { recipeId ->
+                viewModel.onRecipeClicked(recipeId)
             },
-            onActionClick = { position, action ->
-                Log.d("RecipesFragment", "Recipe with id $position: $action action was clicked")
+            onActionClick = { recipeId, action ->
+                viewModel.onActionClicked(recipeId, action)
             }
         )
+
+        view.findViewById<RecyclerView>(R.id.recipes_recycler_view).apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = recipesAdapter
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.recipesState.collect { recipes ->
+                recipesAdapter.submitList(recipes)
+            }
+        }
     }
 }
