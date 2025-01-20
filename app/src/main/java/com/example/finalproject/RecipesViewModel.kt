@@ -2,6 +2,8 @@ package com.example.finalproject
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.example.finalproject.RecipeAction.LIKE
+import com.example.finalproject.RecipeAction.SHARE
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -21,10 +23,10 @@ class RecipesViewModel(private val recipeRepository: RecipeRepository) : ViewMod
         Log.d("RecipesViewModel", "Recipe with id $recipeId was clicked")
     }
 
-    fun onActionClicked(recipeId: Int, action: String) {
+    fun onActionClicked(recipeId: Int, action: RecipeAction) {
         when (action) {
-            "like" -> Log.d("RecipesViewModel", "Like clicked for recipe $recipeId")
-            "share" -> Log.d("RecipesViewModel", "Share clicked for recipe $recipeId")
+            LIKE -> Log.d("RecipesViewModel", "Like clicked for recipe $recipeId")
+            SHARE -> Log.d("RecipesViewModel", "Share clicked for recipe $recipeId")
         }
     }
 }
