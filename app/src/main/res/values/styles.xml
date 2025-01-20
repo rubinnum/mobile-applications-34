@@ -60,4 +60,9 @@
     <item name="android:textStyle">bold</item>
     <item name="android:textColor">#252525</item>
   </style>
+
+  <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+    <item name="android:textStyle">normal</item>
+    <item name="android:fontFamily">@font/mali_regular</item>
+  </style>
 </resources>
