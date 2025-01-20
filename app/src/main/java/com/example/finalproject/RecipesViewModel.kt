@@ -6,13 +6,30 @@ import androidx.lifecycle.viewModelScope
 import com.example.finalproject.RecipeAction.LIKE
 import com.example.finalproject.RecipeAction.SHARE
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class RecipesViewModel : ViewModel() {
     private val recipesRepository = RecipeRepository()
-    private val _recipesState = MutableStateFlow<List<RecipeItem>>(emptyList())
-    val recipesState: StateFlow<List<RecipeItem>> = _recipesState
+    private val _allRecipes = MutableStateFlow<List<RecipeItem>>(emptyList())
+    private val _searchQuery = MutableStateFlow("")
+
+    val recipesState: StateFlow<List<RecipeItem>> = combine(
+        _allRecipes, _searchQuery
+    ) { recipes, query ->
+        when {
+            query.length < 3 -> recipes
+            else -> recipes.filter { recipe ->
+                recipe.title.contains(query, ignoreCase = true)
+                        || recipe.description.contains(query, ignoreCase = true)
+            }
+        }
+    }.stateIn(
+        viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList()
+    )
 
     init {
         loadRecipes()
@@ -20,8 +37,12 @@ class RecipesViewModel : ViewModel() {
 
     private fun loadRecipes() {
         viewModelScope.launch {
-            _recipesState.value = recipesRepository.getRecipes()
+            _allRecipes.value = recipesRepository.getRecipes()
         }
+    }
+
+    fun updateSearchQuery(query: String) {
+        _searchQuery.value = query
     }
 
     fun onRecipeClicked(recipeId: Int) {
