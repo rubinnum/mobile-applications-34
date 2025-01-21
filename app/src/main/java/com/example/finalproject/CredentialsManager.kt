@@ -31,7 +31,6 @@ object CredentialsManager {
             throw IllegalArgumentException("User already exists")
 
         insertCaseInsensitiveEntity(email, password)
-        _loginState.value = LoginState.LoggedIn(email)
     }
 
     fun login(email: String, password: String) {
