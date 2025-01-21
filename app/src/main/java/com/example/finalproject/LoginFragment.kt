@@ -21,7 +21,13 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupViews(view)
+        setupClickListeners()
+        setInitialCredentials()
+        observeLoginState()
+    }
 
+    private fun setupViews(view: View) {
         with(view) {
             registerNow = findViewById(R.id.register_now)
             emailLayout = findViewById(R.id.email_layout)
@@ -30,48 +36,68 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
             passwordEditText = findViewById(R.id.password)
             nextButton = findViewById(R.id.next_button)
         }
+    }
 
+    private fun setupClickListeners() {
         registerNow.setOnClickListener {
-            parentFragmentManager.replaceFragment(
-                R.id.fragment_container,
-                RegistrationFragment(),
-                true
-            )
+            navigateToRegistration()
         }
 
-        val extraEmail = arguments?.getString("email")
-        val extraPassword = arguments?.getString("password")
+        nextButton.setOnClickListener {
+            handleLoginAttempt()
+        }
+    }
 
-        emailEditText.setText(extraEmail)
-        passwordEditText.setText(extraPassword)
+    private fun setInitialCredentials() {
+        arguments?.let { args ->
+            emailEditText.setText(args.getString("email"))
+            passwordEditText.setText(args.getString("password"))
+        }
+    }
 
+    private fun observeLoginState() {
         viewLifecycleOwner.lifecycleScope.launch {
             CredentialsManager.loginState.collect { state ->
                 when (state) {
-                    is CredentialsManager.LoginState.LoggedIn -> {
-                        parentFragmentManager.replaceFragment(
-                            R.id.fragment_container,
-                            RecipesFragment(),
-                            false
-                        )
-                    }
-
+                    is CredentialsManager.LoginState.LoggedIn -> navigateToRecipes()
                     else -> {}
                 }
             }
         }
+    }
 
-        nextButton.setOnClickListener {
-            val email = emailEditText.text.toString()
-            val password = passwordEditText.text.toString()
+    private fun handleLoginAttempt() {
+        val email = emailEditText.text.toString()
+        val password = passwordEditText.text.toString()
 
-            emailLayout.error =
-                if (!CredentialsManager.isEmailValid(email)) getString(R.string.invalid_email_message) else null
-            passwordLayout.error =
-                if (!CredentialsManager.isPasswordValid(password)) getString(R.string.invalid_password_message) else null
+        validateAndShowErrors(email, password)
+        CredentialsManager.login(email, password)
+    }
 
-            CredentialsManager.login(email, password)
-        }
+    private fun validateAndShowErrors(email: String, password: String) {
+        emailLayout.error = if (!CredentialsManager.isEmailValid(email)) {
+            getString(R.string.invalid_email_message)
+        } else null
+
+        passwordLayout.error = if (!CredentialsManager.isPasswordValid(password)) {
+            getString(R.string.invalid_password_message)
+        } else null
+    }
+
+    private fun navigateToRecipes() {
+        parentFragmentManager.replaceFragment(
+            R.id.fragment_container,
+            RecipesFragment(),
+            false
+        )
+    }
+
+    private fun navigateToRegistration() {
+        parentFragmentManager.replaceFragment(
+            R.id.fragment_container,
+            RegistrationFragment(),
+            true
+        )
     }
 
     companion object {

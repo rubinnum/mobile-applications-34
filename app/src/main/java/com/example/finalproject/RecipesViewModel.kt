@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 
 class RecipesViewModel : ViewModel() {
-    private val recipesRepository = RecipeRepository()
+    private val recipesRepository = RecipesRepository()
     private val _allRecipes = MutableStateFlow<List<RecipeItem>>(emptyList())
     private val _searchQuery = MutableStateFlow("")
     private val _uiState = MutableStateFlow<RecipesUiState>(RecipesUiState.Loading)
