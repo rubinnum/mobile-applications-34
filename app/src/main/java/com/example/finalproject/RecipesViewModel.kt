@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finalproject.RecipeAction.LIKE
 import com.example.finalproject.RecipeAction.SHARE
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +13,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 
-@FlowPreview
 class RecipesViewModel : ViewModel() {
     private val recipesRepository = RecipeRepository()
     private val _allRecipes = MutableStateFlow<List<RecipeItem>>(emptyList())
