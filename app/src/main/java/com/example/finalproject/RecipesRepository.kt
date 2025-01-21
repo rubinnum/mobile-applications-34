@@ -1,6 +1,6 @@
 package com.example.finalproject
 
-class RecipeRepository {
+class RecipesRepository {
     fun getRecipes(): List<RecipeItem> {
         return listOf(
             RecipeItem(1, R.drawable.karaage, "Black Karaage with Curry Bento", "This Japanese modern izakaya dish features crispy black ka.."),

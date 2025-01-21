@@ -5,9 +5,11 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.finalproject.Utils.Companion.replaceFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment(R.layout.login_fragment) {
     private lateinit var registerNow: TextView
@@ -19,7 +21,13 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupViews(view)
+        setupClickListeners()
+        setInitialCredentials()
+        observeLoginState()
+    }
 
+    private fun setupViews(view: View) {
         with(view) {
             registerNow = findViewById(R.id.register_now)
             emailLayout = findViewById(R.id.email_layout)
@@ -28,38 +36,68 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
             passwordEditText = findViewById(R.id.password)
             nextButton = findViewById(R.id.next_button)
         }
+    }
 
+    private fun setupClickListeners() {
         registerNow.setOnClickListener {
-            parentFragmentManager.replaceFragment(
-                R.id.fragment_container,
-                RegistrationFragment(),
-                true
-            )
+            navigateToRegistration()
         }
-
-        val extraEmail = arguments?.getString("email")
-        val extraPassword = arguments?.getString("password")
-
-        emailEditText.setText(extraEmail)
-        passwordEditText.setText(extraPassword)
 
         nextButton.setOnClickListener {
-            val email = emailEditText.text.toString()
-            val password = passwordEditText.text.toString()
+            handleLoginAttempt()
+        }
+    }
 
-            emailLayout.error =
-                if (!CredentialsManager.isEmailValid(email)) getString(R.string.invalid_email_message) else null
-            passwordLayout.error =
-                if (!CredentialsManager.isPasswordValid(password)) getString(R.string.invalid_password_message) else null
+    private fun setInitialCredentials() {
+        arguments?.let { args ->
+            emailEditText.setText(args.getString("email"))
+            passwordEditText.setText(args.getString("password"))
+        }
+    }
 
-            if (CredentialsManager.userExists(email, password)) {
-                parentFragmentManager.replaceFragment(
-                    R.id.fragment_container,
-                    RecipesFragment(),
-                    true
-                )
+    private fun observeLoginState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            CredentialsManager.loginState.collect { state ->
+                when (state) {
+                    is CredentialsManager.LoginState.LoggedIn -> navigateToRecipes()
+                    else -> {}
+                }
             }
         }
+    }
+
+    private fun handleLoginAttempt() {
+        val email = emailEditText.text.toString()
+        val password = passwordEditText.text.toString()
+
+        validateAndShowErrors(email, password)
+        CredentialsManager.login(email, password)
+    }
+
+    private fun validateAndShowErrors(email: String, password: String) {
+        emailLayout.error = if (!CredentialsManager.isEmailValid(email)) {
+            getString(R.string.invalid_email_message)
+        } else null
+
+        passwordLayout.error = if (!CredentialsManager.isPasswordValid(password)) {
+            getString(R.string.invalid_password_message)
+        } else null
+    }
+
+    private fun navigateToRecipes() {
+        parentFragmentManager.replaceFragment(
+            R.id.fragment_container,
+            RecipesFragment(),
+            false
+        )
+    }
+
+    private fun navigateToRegistration() {
+        parentFragmentManager.replaceFragment(
+            R.id.fragment_container,
+            RegistrationFragment(),
+            true
+        )
     }
 
     companion object {

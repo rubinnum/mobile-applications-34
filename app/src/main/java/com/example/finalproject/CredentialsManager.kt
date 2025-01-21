@@ -1,9 +1,19 @@
 package com.example.finalproject
 
 import androidx.core.util.PatternsCompat
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 object CredentialsManager {
     var registeredUsers: MutableMap<String, String> = mutableMapOf()
+    private val _loginState = MutableStateFlow<LoginState>(LoginState.LoggedOut)
+    val loginState: StateFlow<LoginState> = _loginState.asStateFlow()
+
+    sealed class LoginState {
+        data object LoggedOut : LoginState()
+        data class LoggedIn(val email: String) : LoginState()
+    }
 
     fun isEmailValid(email: String): Boolean =
         PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()
@@ -21,6 +31,15 @@ object CredentialsManager {
             throw IllegalArgumentException("User already exists")
 
         insertCaseInsensitiveEntity(email, password)
+    }
+
+    fun login(email: String, password: String) {
+        if (userExists(email, password))
+            _loginState.value = LoginState.LoggedIn(email)
+    }
+
+    fun logout() {
+        _loginState.value = LoginState.LoggedOut
     }
 
     private fun insertCaseInsensitiveEntity(email: String, password: String) {

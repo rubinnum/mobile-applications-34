@@ -18,7 +18,12 @@ class RegistrationFragment : Fragment(R.layout.registration_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupViews(view)
+        setupLoginClickListener()
+        setupNextButtonClickListener()
+    }
 
+    private fun setupViews(view: View) {
         with(view) {
             login = findViewById(R.id.login)
             nextButton = findViewById(R.id.next_button)
@@ -26,24 +31,36 @@ class RegistrationFragment : Fragment(R.layout.registration_fragment) {
             validEmailEditText = findViewById(R.id.valid_email)
             strongPasswordEditText = findViewById(R.id.strong_password)
         }
+    }
 
+    private fun setupLoginClickListener() {
         login.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
+    }
 
+    private fun setupNextButtonClickListener() {
         nextButton.setOnClickListener {
-            try {
-                val email = validEmailEditText.text.toString()
-                val password = strongPasswordEditText.text.toString()
-
-                CredentialsManager.registerUser(email, password)
-                parentFragmentManager.replaceFragment(
-                    R.id.fragment_container,
-                    LoginFragment.newInstance(email, password)
-                )
-            } catch (_: IllegalArgumentException) {
-                validEmailLayout.error = getString(R.string.invalid_email_message)
-            }
+            handleRegistration()
         }
+    }
+
+    private fun handleRegistration() {
+        try {
+            val email = validEmailEditText.text.toString()
+            val password = strongPasswordEditText.text.toString()
+
+            CredentialsManager.registerUser(email, password)
+            navigateToLoginFragment(email, password)
+        } catch (_: IllegalArgumentException) {
+            validEmailLayout.error = getString(R.string.invalid_email_message)
+        }
+    }
+
+    private fun navigateToLoginFragment(email: String, password: String) {
+        parentFragmentManager.replaceFragment(
+            R.id.fragment_container,
+            LoginFragment.newInstance(email, password)
+        )
     }
 }
