@@ -5,9 +5,11 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.finalproject.Utils.Companion.replaceFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment(R.layout.login_fragment) {
     private lateinit var registerNow: TextView
@@ -43,6 +45,22 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
         emailEditText.setText(extraEmail)
         passwordEditText.setText(extraPassword)
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            CredentialsManager.loginState.collect { state ->
+                when (state) {
+                    is CredentialsManager.LoginState.LoggedIn -> {
+                        parentFragmentManager.replaceFragment(
+                            R.id.fragment_container,
+                            RecipesFragment(),
+                            false
+                        )
+                    }
+
+                    else -> {}
+                }
+            }
+        }
+
         nextButton.setOnClickListener {
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
@@ -52,13 +70,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
             passwordLayout.error =
                 if (!CredentialsManager.isPasswordValid(password)) getString(R.string.invalid_password_message) else null
 
-            if (CredentialsManager.userExists(email, password)) {
-                parentFragmentManager.replaceFragment(
-                    R.id.fragment_container,
-                    RecipesFragment(),
-                    true
-                )
-            }
+            CredentialsManager.login(email, password)
         }
     }
 

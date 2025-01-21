@@ -23,7 +23,6 @@ class RecipesViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
-            delay(2000)
             _allRecipes.value = recipesRepository.getRecipes()
 
             combine(

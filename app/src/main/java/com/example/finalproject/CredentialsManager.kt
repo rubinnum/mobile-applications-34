@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 object CredentialsManager {
-    private var registeredUsers: MutableMap<String, String> = mutableMapOf()
+    var registeredUsers: MutableMap<String, String> = mutableMapOf()
     private val _loginState = MutableStateFlow<LoginState>(LoginState.LoggedOut)
     val loginState: StateFlow<LoginState> = _loginState.asStateFlow()
 
@@ -20,13 +20,8 @@ object CredentialsManager {
 
     fun isPasswordValid(password: String): Boolean = password.length >= 8
 
-    fun userExists(email: String, password: String): Boolean {
-        val exists = email == "test@te.st" && password == "12345678"
-        if (exists) {
-            _loginState.value = LoginState.LoggedIn(email)
-        }
-        return exists
-    }
+    fun userExists(email: String, password: String): Boolean =
+        email == "test@te.st" && password == "12345678"
 
     fun registerUser(email: String, password: String) {
         if (!areCredentialsValid(email, password))
@@ -37,6 +32,11 @@ object CredentialsManager {
 
         insertCaseInsensitiveEntity(email, password)
         _loginState.value = LoginState.LoggedIn(email)
+    }
+
+    fun login(email: String, password: String) {
+        if (userExists(email, password))
+            _loginState.value = LoginState.LoggedIn(email)
     }
 
     fun logout() {
